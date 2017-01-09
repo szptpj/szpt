@@ -25,7 +25,7 @@ import fragment.MainFragment;
 import fragment.SecondHandFragment;
 
 /**
- * Created by hasee on 2016/11/27.000
+ * Created by hasee on 2016/11/27.000gggg
  */
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
