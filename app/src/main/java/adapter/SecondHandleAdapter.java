@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.szpt.hasee.szpt.R;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.ScondHandle;
+import ui.SecondHandleShowImage;
 
 /**
  * Created by CGS on 2016/12/25.
@@ -131,6 +134,18 @@ public class SecondHandleAdapter extends BaseAdapter {
                 holder.mgallery.addView(mview9);break;
             default:break;
         }
+        holder.mgallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"查看图片",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, SecondHandleShowImage.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("handleMessage",p);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
+
         //holder.txtname.setText(a.getName());
         //holder.telphone.setText(a.getTelPhone());
         holder.tv_nb.setText(p.getNowbalance()+"");

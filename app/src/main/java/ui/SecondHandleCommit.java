@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.szpt.hasee.szpt.R;
@@ -44,7 +45,6 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
-import fragment.SecondHandFragment;
 
 /**
  * Created by CGS on 2016/12/25.
@@ -74,10 +74,13 @@ public class SecondHandleCommit extends Activity {
     private ArrayList<HashMap<String, Object>> imageItem;
     private SimpleAdapter simpleAdapter;
     private Button btn_query;
+    private TextView text_tosend;
+    private  TextView text_toback;
     ScondHandle process;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_secondhandlecommit);
@@ -99,6 +102,9 @@ public class SecondHandleCommit extends Activity {
         tv_phone= (EditText) findViewById(R.id.et_phone);
         buttonPublish= (Button) findViewById(R.id.btn_submit);
         btn_query= (Button) findViewById(R.id.btn_query);
+        text_tosend= (TextView) findViewById(R.id.text_tosend);
+        text_toback= (TextView) findViewById(R.id.text_toback);
+
     }
     private void initGridView() {
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.gridview_addpic); //加号
@@ -149,96 +155,113 @@ public class SecondHandleCommit extends Activity {
     }
 
     private void initDatas() {
-        buttonPublish.setOnClickListener(new View.OnClickListener()
+        text_toback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backOnclick();
+            }
+        });
+        /*buttonPublish*/text_tosend.setOnClickListener(new View.OnClickListener()
         {
 
             @SuppressWarnings("unused")
             @Override
             public void onClick(View v) {
-               final String describe=tv_describe.getText().toString().trim();
+
                 String nb=tv_nb.getText().toString().trim();
                 String ob=tv_ob.getText().toString().trim();
-               final String xy=tv_xy.getText().toString().trim();
-               final String telp=tv_phone.getText().toString().trim();
+               // String tp=tv_phone.getText().toString().trim();
                 SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
-               final String tv_time=s.format(new java.util.Date());
-               final int nb1=Integer.parseInt(nb);
-               final int ob1=Integer.parseInt(ob);
+                final String telp=tv_phone.getText().toString().trim();
+                final String describe=tv_describe.getText().toString().trim();
+                final String xy=tv_xy.getText().toString().trim();
+                final String tv_time=s.format(new java.util.Date());
                 if(describe.equals("")||nb.equals("")||ob.equals("")||xy.equals("")||telp.equals("")){
                     Toast.makeText(SecondHandleCommit.this, "请完整填写信息！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (imageItem.size() == 1) {
+                }else if (imageItem.size() == 1) {
                     Toast.makeText(SecondHandleCommit.this, "请添加商品图片", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                final String[] photo1 = new String[mphotopath.size()];
-                int i = 0;
-                for (String photo2 : mphotopath) {
-                    photo1[i++] = photo2;
-                }
-                final ProgressDialog progressDialog = new ProgressDialog(SecondHandleCommit.this);
-                progressDialog.setMessage("正在上传...");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
-                Bmob.uploadBatch(photo1, new UploadBatchListener() {
-                    @Override
-                    public void onSuccess(List<BmobFile> list, List<String> list1) {
-                        if (list1.size() == photo1.length) {
-                            switch (photo1.length){
-                                case 1: ScondHandle process1 = new ScondHandle(list.get(0));
-                                   process1.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",9);
-                                    insertObject(process1);
-                                    break;
-                                case 2: ScondHandle process2 = new ScondHandle(list.get(0), list.get(1));
-                                    process2.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",8);
-                                    insertObject(process2);;
-                                    break;
-                                case 3: ScondHandle process3 = new ScondHandle(list.get(0), list.get(1),list.get(2));
-                                    process3.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",7);
-                                    insertObject(process3);
-                                    break;
-                                case 4: ScondHandle process4 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3));
-                                    process4.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",6);
-                                    insertObject(process4);
-                                    break;
-                                case 5: ScondHandle process5 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3),list.get(4));
-                                    process5.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",5);
-                                    insertObject(process5);
-                                    break;
-                                case 6: ScondHandle process6 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3),list.get(4),list.get(5));
-                                    process6.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",4);
-                                    insertObject(process6);
-                                    break;
-                                case 7: ScondHandle process7 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3),list.get(4),list.get(5),list.get(6));
-                                    process7.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",3);
-                                    insertObject(process7);
-                                    break;
-                                case 8: ScondHandle process8 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3),list.get(4),list.get(5),list.get(6),list.get(7));
-                                    process8.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",2);
-                                    insertObject(process8);
-                                    break;
-                                case 9: ScondHandle process9 = new ScondHandle(list.get(0), list.get(1),list.get(2),list.get(3),list.get(4),list.get(5),list.get(6),list.get(7),list.get(8));
-                                    process9.setAllMessage(nb1,ob1,xy,telp,describe,tv_time,"小陈",1);
-                                    insertObject(process9);
-                                    break;
+                }else {
+                    final int nb1=Integer.parseInt(nb);
+                    final int ob1=Integer.parseInt(ob);
+                    final String[] photo1 = new String[mphotopath.size()];
+                    int i = 0;
+                    for (String photo2 : mphotopath) {
+                        photo1[i++] = photo2;
+                    }
+                    final ProgressDialog progressDialog = new ProgressDialog(SecondHandleCommit.this);
+                    progressDialog.setMessage("正在上传...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+                    Bmob.uploadBatch(photo1, new UploadBatchListener() {
+                        @Override
+                        public void onSuccess(List<BmobFile> list, List<String> list1) {
+                            if (list1.size() == photo1.length) {
+                                switch (photo1.length) {
+                                    case 1:
+                                        ScondHandle process1 = new ScondHandle(list.get(0));
+                                        process1.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 9);
+                                        insertObject(process1);
+                                        break;
+                                    case 2:
+                                        ScondHandle process2 = new ScondHandle(list.get(0), list.get(1));
+                                        process2.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 8);
+                                        insertObject(process2);
+                                        ;
+                                        break;
+                                    case 3:
+                                        ScondHandle process3 = new ScondHandle(list.get(0), list.get(1), list.get(2));
+                                        process3.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 7);
+                                        insertObject(process3);
+                                        break;
+                                    case 4:
+                                        ScondHandle process4 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3));
+                                        process4.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 6);
+                                        insertObject(process4);
+                                        break;
+                                    case 5:
+                                        ScondHandle process5 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+                                        process5.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 5);
+                                        insertObject(process5);
+                                        break;
+                                    case 6:
+                                        ScondHandle process6 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5));
+                                        process6.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 4);
+                                        insertObject(process6);
+                                        break;
+                                    case 7:
+                                        ScondHandle process7 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6));
+                                        process7.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 3);
+                                        insertObject(process7);
+                                        break;
+                                    case 8:
+                                        ScondHandle process8 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6), list.get(7));
+                                        process8.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 2);
+                                        insertObject(process8);
+                                        break;
+                                    case 9:
+                                        ScondHandle process9 = new ScondHandle(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6), list.get(7), list.get(8));
+                                        process9.setAllMessage(nb1, ob1, xy, telp, describe, tv_time, "小陈", 1);
+                                        insertObject(process9);
+                                        break;
+                                }
+                                progressDialog.dismiss();
                             }
-                            progressDialog.dismiss();
                         }
-                    }
-                    @Override
-                    public void onProgress(int i, int i1, int i2, int i3) {
-                        Log.i("life", "insertBatchDatasWithOne -onProgress :" + i + "---" + i1 + "---" + i2 + "----" + i3);
 
-                    }
+                        @Override
+                        public void onProgress(int i, int i1, int i2, int i3) {
+                            Log.i("life", "insertBatchDatasWithOne -onProgress :" + i + "---" + i1 + "---" + i2 + "----" + i3);
 
-                    @Override
-                    public void onError(int i, String s) {
-                        Toast.makeText(SecondHandleCommit.this, "错误码" + i + ",错误描述：" + s, Toast.LENGTH_LONG).show();
-                    }
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+                            Toast.makeText(SecondHandleCommit.this, "错误码" + i + ",错误描述：" + s, Toast.LENGTH_LONG).show();
+                        }
 
 
-                });
+                    });
+                }
 
                // Toast.makeText(SecondHandleCommit.this, "发布成功", Toast.LENGTH_SHORT).show();
             }
@@ -270,8 +293,7 @@ public class SecondHandleCommit extends Activity {
         btn_query.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(SecondHandleCommit.this, SecondHandFragment.class);
-                startActivity(i);
+              finish();
             }
         });
     }
@@ -483,7 +505,37 @@ public class SecondHandleCommit extends Activity {
             startActivityForResult(intentput,GET_DATA);
         }
     }
+   private void backOnclick(){
+       if(commitData()){
+           finish();
+       }
+       android.content.DialogInterface.OnClickListener lisrener=new android.content.DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialog, int which) {
+               finish();
+               return;
+           }
+       };
+       AlertDialog.Builder builder=new AlertDialog.Builder(this);
+       builder.setTitle("放弃本次发布吗？");
+       builder.setPositiveButton("放弃", lisrener);
+       builder.setNegativeButton("继续编辑",null);
+       builder.show();
+       //finish();
 
 
-
+    }
+    public boolean commitData(){
+        String describe,nb,ob,xy,telp;
+        describe=tv_describe.getText().toString().trim();
+        nb=tv_nb.getText().toString().trim();
+        ob=tv_ob.getText().toString().trim();
+        xy=tv_xy.getText().toString().trim();
+        telp=tv_phone.getText().toString().trim();
+        if(describe.equals("")&&nb.equals("")&&ob.equals("")&&xy.equals("")&&telp.equals("")&&imageItem.size() == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

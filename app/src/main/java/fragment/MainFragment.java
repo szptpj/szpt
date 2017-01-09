@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -219,7 +218,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(getActivity(),"当前是"+messages[(i+messages.length-1)% messages.length],Toast.LENGTH_SHORT).show();
-                View popupView = getActivity().getLayoutInflater().inflate(R.layout.lost_popup_view_layout, null);
+    /*popupview*/           View popupView = getActivity().getLayoutInflater().inflate(R.layout.lost_popup_view_layout, null);
                 TextView textView= (TextView) popupView.findViewById(R.id.txv_lost_popuwin);
                 textView.setText(click_lostInfos.get(currentInfo));
                 //  2016/5/17 创建PopupWindow对象，指定宽度和高度
