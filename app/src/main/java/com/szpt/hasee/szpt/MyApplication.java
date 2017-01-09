@@ -11,7 +11,7 @@ import com.android.volley.toolbox.Volley;
 import utils.LruBitmapCache;
 
 /**
- * Created by hasee on 2016/11/26.
+ * Created by hasee on 2016/11/26..
  */
 
 public class MyApplication extends Application {
