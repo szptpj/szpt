@@ -3,14 +3,11 @@ package com.szpt.hasee.szpt;
 import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -21,17 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import base.BaseActivity;
-import bean.Course;
-import bean.SchoolTimeTable;
 import cn.bmob.v3.Bmob;
 import fragment.AnswerFragemnt;
 import fragment.LostFragment;
 import fragment.MainFragment;
 import fragment.SecondHandFragment;
-import ui.ChatActivity;
 
 /**
- * Created by hasee on 2016/11/27.
+ * Created by hasee on 2016/11/27.000gggg
  */
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
